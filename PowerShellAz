@@ -1,0 +1,34 @@
+FROM mcr.microsoft.com/powershell
+LABEL Description="PowerShellAz" Vendor="Microsoft"
+RUN pwsh -c 'Install-Module Az -Force'
+#RUN pwsh -c "Install-Module AzureRM.netcore -Force"
+#RUN pwsh -c "Install-Module Az -Force"
+#RUN pwsh -c "Install-Module Az -Force"
+# RUN apt-get update
+# RUN apt-get install -y libssl-dev libffi-dev
+# RUN apt-get install -y python-dev
+# RUN apt-get install apt-transport-https lsb-release software-properties-common -y
+
+
+# Install azure-cli
+RUN apt-get update && apt-get install -y
+RUN apt install python3-pip -y
+RUN apt-get install -y libssl-dev libffi-dev
+RUN apt-get install apt-transport-https lsb-release software-properties-common -y
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+
+#Install Devops-Cli
+RUN az extension add --name azure-devops
+
+#Install Kubernetes KubeCtl
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl
+RUN chmod +x ./kubectl
+#RUN mv ./kubectl /usr/local/bin/kubectl
+
+#RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl
+# RUN apt-get update && apt-get install -y apt-transport-https gnupg2
+# RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+# RUN echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
+# RUN apt-get update
+# RUN apt-get install -y kubectl
+CMD [ "pwsh" ]
